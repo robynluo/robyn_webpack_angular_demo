@@ -7,11 +7,14 @@ var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('bundle','bundle.js'
 
 module.exports = {
     entry:{
-        index: path.resolve(__dirname, 'app/js/index.js'),
+        index: [
+            'webpack/hot/dev-server',
+            'webpack-dev-server/client?http://localhost:8080',
+            path.resolve(__dirname, 'app/js/index.js')],
         bundle: [
                     path.resolve(__dirname, 'mc_lib/angular/angular.js'),
                     path.resolve(__dirname, 'mc_lib/angular-route/angular-route.js')
-                ],
+                ]
     },
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -44,7 +47,7 @@ module.exports = {
         commonsPlugin,
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
-        new openBrowserWebpackPlugin({ url: 'http://localhost:9090' }),
+        new openBrowserWebpackPlugin({ url: 'http://localhost:8080' }),
         new ExtractTextPlugin("styles.css"),
         new HtmlWebpackPlugin({
             filename: 'index.html',
